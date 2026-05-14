@@ -14,7 +14,10 @@ unset PL_SEGMENTS; declare -a PL_SEGMENTS  # Array to hold segments and their ar
 function segment_end {
     local end_char
     local fg
-    if [ "$__last_color" == "$2" ]; then
+    if [ "$__last_color" == "None" ]; then
+        end_char=""
+        fg="$1"
+    elif [ "$__last_color" == "$2" ]; then
         # segment colors are the same, use a foreground separator
         end_char="${PL_SYMBOLS[soft_separator]}"
         fg="$1"
@@ -124,7 +127,7 @@ function path_segment {
         PROMPT_DIRTRIM="$PL_PATH_TRIM"
     fi
     PS1+="$(segment_end "$fg_color" "$bg_color")"
-    PS1+="$(segment_content "$fg_color" "$bg_color" " $content ")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content")"
     __last_color="$bg_color"
 }
 
@@ -285,6 +288,8 @@ function set_default_colors() {
         [Purple]='\[\e[0;35m\]'       # Purple
         [Cyan]='\[\e[0;36m\]'         # Cyan
         [White]='\[\e[0;37m\]'        # White
+        [BrightWhite]='\[\e[1;37m\]'        # White
+        [BrightBlack]='\[\e[1;30m\]'        # Black
         # Background
         [On_Default]='\[\e[49m\]'     # Default
         [On_Black]='\[\e[40m\]'       # Black
