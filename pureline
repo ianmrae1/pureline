@@ -83,7 +83,7 @@ function time_segment {
         local content="\A"
     fi
     PS1+="$(segment_end "$fg_color" "$bg_color")"
-    PS1+="$(segment_content "$fg_color" "$bg_color" " $content ")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content")"
     __last_color="$bg_color"
 }
 
@@ -107,7 +107,7 @@ function user_segment {
         fi
     fi
     PS1+="$(segment_end "$fg_color" "$bg_color")"
-    PS1+="$(segment_content "$fg_color" "$bg_color" " $content ")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content")"
     __last_color="$bg_color"
 }
 
