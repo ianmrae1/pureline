@@ -106,6 +106,14 @@ function user_segment {
             content+="@\h"
         fi
     fi
+    if [ ${EUID} -eq 0 ]; then
+        if [ -n "$PL_USER_ROOT_FG" ]; then
+            fg_color="$PL_USER_ROOT_FG"
+        fi
+        if [ -n "$PL_USER_ROOT_BG" ]; then
+            bg_color="$PL_USER_ROOT_BG"
+        fi
+    fi
     PS1+="$(segment_end "$fg_color" "$bg_color")"
     PS1+="$(segment_content "$fg_color" "$bg_color" " $content$__padchar")"
     __last_color="$bg_color"
@@ -288,8 +296,9 @@ function set_default_colors() {
         [Purple]='\[\e[0;35m\]'       # Purple
         [Cyan]='\[\e[0;36m\]'         # Cyan
         [White]='\[\e[0;37m\]'        # White
-        [BrightWhite]='\[\e[1;37m\]'        # White
-        [BrightBlack]='\[\e[1;30m\]'        # Black
+        [BrightBlack]='\[\e[1;30m\]'  # Black
+        [BrightRed]='\[\e[1;31m\]'     # Red
+        [BrightWhite]='\[\e[1;37m\]'  # White
         # Background
         [On_Default]='\[\e[49m\]'     # Default
         [On_Black]='\[\e[40m\]'       # Black
