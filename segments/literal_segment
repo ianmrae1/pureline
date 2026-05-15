@@ -2,5 +2,5 @@
 
 function literal_segment {
     PS1+="$(segment_content "$2" "$1" "$3")"
-    __last_color="None"
+    __last_color="NoSeparator"
 }

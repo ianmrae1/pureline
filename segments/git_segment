@@ -104,7 +104,7 @@ function git_segment {
     fi
 
     PS1+="$(segment_end "$fg_color" "$bg_color")"
-    PS1+="$(segment_content "$fg_color" "$bg_color" "$content")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" "$content$__padchar")"
     __last_color="$bg_color"
 }
 

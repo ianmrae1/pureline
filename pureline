@@ -14,7 +14,7 @@ unset PL_SEGMENTS; declare -a PL_SEGMENTS  # Array to hold segments and their ar
 function segment_end {
     local end_char
     local fg
-    if [ "$__last_color" == "None" ]; then
+    if [ "$__last_color" == "NoSeparator" ]; then
         end_char=""
         fg="$1"
     elif [ "$__last_color" == "$2" ]; then
@@ -83,7 +83,7 @@ function time_segment {
         local content="\A"
     fi
     PS1+="$(segment_end "$fg_color" "$bg_color")"
-    PS1+="$(segment_content "$fg_color" "$bg_color" " $content")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content$__padchar")"
     __last_color="$bg_color"
 }
 
@@ -107,7 +107,7 @@ function user_segment {
         fi
     fi
     PS1+="$(segment_end "$fg_color" "$bg_color")"
-    PS1+="$(segment_content "$fg_color" "$bg_color" " $content")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content$__padchar")"
     __last_color="$bg_color"
 }
 
@@ -127,7 +127,7 @@ function path_segment {
         PROMPT_DIRTRIM="$PL_PATH_TRIM"
     fi
     PS1+="$(segment_end "$fg_color" "$bg_color")"
-    PS1+="$(segment_content "$fg_color" "$bg_color" " $content")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content$__padchar")"
     __last_color="$bg_color"
 }
 
@@ -142,7 +142,7 @@ function background_jobs_segment {
     number_jobs=$(jobs | grep -cv "Done" | tr -d '[:space:]')
     if [ ! "$number_jobs" -eq 0 ]; then
         PS1+="$(segment_end "$fg_color" "$bg_color")"
-        PS1+="$(segment_content "$fg_color" "$bg_color" " ${PL_SYMBOLS[background_jobs]} $number_jobs ")"
+        PS1+="$(segment_content "$fg_color" "$bg_color" " ${PL_SYMBOLS[background_jobs]} $number_jobs$__padchar")"
         __last_color="$bg_color"
     fi
 }
@@ -156,7 +156,7 @@ function read_only_segment {
     local fg_color="$2"
     if [ ! -w "$PWD" ]; then
         PS1+="$(segment_end "$fg_color" "$bg_color")"
-        PS1+="$(segment_content "$fg_color" "$bg_color" " ${PL_SYMBOLS[read_only]} ")"
+        PS1+="$(segment_content "$fg_color" "$bg_color" " ${PL_SYMBOLS[read_only]}$__padchar")"
         __last_color="$bg_color"
     fi
 }
@@ -211,7 +211,7 @@ function return_code_segment {
     if [ ! "$__return_code" -eq 0 ]; then
         local bg_color="$1"
         local fg_color="$2"
-        local content=" ${PL_SYMBOLS[return_code]} $__return_code "
+        local content=" ${PL_SYMBOLS[return_code]} $__return_code$__padchar"
         PS1+="$(segment_end "$fg_color" "$bg_color")"
         PS1+="$(segment_content "$fg_color" "$bg_color" "$content")"
         __last_color="$bg_color"
@@ -258,7 +258,7 @@ function __pureline_post {
 
     # final end point
     if ((${#PL_SEGMENTS[@]} > 0)); then
-        PS1+="$(segment_end "$__last_color" 'Default')"
+        PS1+="$(segment_end "$__last_color" 'Default')$__padchar"
     else
         # No segments loaded, set a basic prompt
         PS1="PL | No segments Loaded: $(prompt_char)"
@@ -351,6 +351,12 @@ function main() {
     if [ -f "$1" ]; then
         # shellcheck source=/dev/null
         source "$1"
+    fi
+
+    if [ "$PL_COMPACT" = true ]; then
+        __padchar=""
+    else
+        __padchar=" "
     fi
 
     # source external segments

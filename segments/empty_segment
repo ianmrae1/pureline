@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 function empty_segment {
-    __last_color="None"
+    __last_color="NoSeparator"
 }
