@@ -4,14 +4,14 @@
 
 # Set default symbols if not already defined in config
 # Defaults should be standard symbols.
-[[ -z ${PL_SYMBOLS[git_branch]} ]] && PL_SYMBOLS[git_branch]="" 
-[[ -z ${PL_SYMBOLS[git_untracked]} ]] && PL_SYMBOLS[git_untracked]="?"
-[[ -z ${PL_SYMBOLS[git_stash]} ]] && PL_SYMBOLS[git_stash]="§"
-[[ -z ${PL_SYMBOLS[git_ahead]} ]] && PL_SYMBOLS[git_ahead]="↑"
-[[ -z ${PL_SYMBOLS[git_behind]} ]] && PL_SYMBOLS[git_behind]="↓"
-[[ -z ${PL_SYMBOLS[git_modified]} ]] && PL_SYMBOLS[git_modified]="+"
-[[ -z ${PL_SYMBOLS[git_staged]} ]] && PL_SYMBOLS[git_staged]="•"
-[[ -z ${PL_SYMBOLS[git_conflicts]} ]] && PL_SYMBOLS[git_conflicts]="*"
+[[ -v PL_SYMBOLS[git_branch] ]] || PL_SYMBOLS[git_branch]="╬" 
+[[ -v{PL_SYMBOLS[git_untracked] ]] || PL_SYMBOLS[git_untracked]="?"
+[[ -z PL_SYMBOLS[git_stash] ]] || PL_SYMBOLS[git_stash]="§"
+[[ -v PL_SYMBOLS[git_ahead] ]] || PL_SYMBOLS[git_ahead]="↑"
+[[ -v PL_SYMBOLS[git_behind] ]] || PL_SYMBOLS[git_behind]="↓"
+[[ -v PL_SYMBOLS[git_modified] ]] || PL_SYMBOLS[git_modified]="+"
+[[ -v PL_SYMBOLS[git_staged] ]] || PL_SYMBOLS[git_staged]="•"
+[[ -v PL_SYMBOLS[git_conflicts] ]] || PL_SYMBOLS[git_conflicts]="*"
 
 # -----------------------------------------------------------------------------
 # append to prompt: git branch with indicators for;
