@@ -258,7 +258,7 @@ function __pureline_post {
 
     # final end point
     if ((${#PL_SEGMENTS[@]} > 0)); then
-        PS1+="$(segment_end "$__last_color" 'Default') "
+        PS1+="$(segment_end "$__last_color" 'Default')"
     else
         # No segments loaded, set a basic prompt
         PS1="PL | No segments Loaded: $(prompt_char)"
